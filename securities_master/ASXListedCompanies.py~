@@ -133,11 +133,11 @@ def insert_daily_price(ticker,data_vendor):
 	#get Symbol table for the ticker
 	symbol_id = Symbol.get(ticker = ticker).id
 	print(symbol_id)	
-	existing_price_data  = Daily_Price.select(Daily_Price.symbol).distinct()
-		
+	existing_price_data  = Daily_Price.select()
+	
 	print(existing_price_data)	
 	existing_symbols_in_price_data =[existing_price_record.symbol_id for existing_price_record in existing_price_data]	
-	#del existing_price_data
+
 	existing_symbols_in_price_data = set(existing_symbols_in_price_data)	
 	print(existing_symbols_in_price_data)	
 	
@@ -211,34 +211,38 @@ def insert_daily_price(ticker,data_vendor):
 		# if does not exist, construct query
 			except:
 				print('Error')
-		
-	del existing_price_data
+	
+	# construct query to send to quandl
+	
+
+	# turn data frame into a list of dictionaries
+
+
+	# insert dictionary into database
+	
+	# save dataframe to database
+
+	
+	pass
 	
 def insert_all_daily_price(data_vendor):
 	existing_ticker_download = True
 	
-	existing_symbols = Symbol.select(Symbol.id).distinct()
-	print(existing_symbols)	
-	existing_ticker_list = [existing_symbol.id for existing_symbol in existing_symbols]
-	#existing_ticker_key =[existing_symbol.id for existing_symbol in existing_symbols]	
-	print(existing_ticker_list)
+	existing_symbols = Symbol.select()
+	existing_ticker_list = [existing_symbol.ticker for existing_symbol in existing_symbols]
+	existing_ticker_key =[existing_symbol.id for existing_symbol in existing_symbols]	
 
-	existing_daily_price = Daily_Price.select(Daily_Price.symbol).distinct()
-	existing_daily_data_ticker_ids = set([daily_price.symbol_id for daily_price in existing_daily_price])
-	print(existing_daily_data_ticker_ids)		
-	#existing_daily_ticker_list = set([existing_symbol.ticker for existing_symbol in existing_symbols])	
+
+	existing_daily_price = Daily_Price.select()
+	existing_daily_data_key_list = set([daily_price.id for daily_price in existing_daily_price])
 	
-	#print(existing_daily_ticker_list)
-	del existing_daily_price
-	del existing_symbols
+		
 	for existing_ticker in existing_ticker_list:
-		print(existing_ticker)
-		#ticker = Symbol.get(Symbol.ticker==existing_ticker).id
-		#print(ticker)	
-		if existing_ticker not in existing_daily_data_ticker_ids:
-			print('Downloading {}'.format(existing_ticker))	
-			existing_ticker_id = Symbol.get(Symbol.id==existing_ticker).ticker	
-			insert_daily_price(existing_ticker_id,data_vendor)
+		ticker_id = Symbol.select().get(Symbol.id==existing_ticker)
+		print(ticker_id)	
+		if ticker_id not in existing_daily_data_key_list:
+
+			insert_daily_price(existing_ticker,data_vendor)
 	
 def initialise():
 	#asx_listing=open_ASX_listing_from_csv('asx_listing/ASXListedCompanies.csv')
