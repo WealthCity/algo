@@ -18,14 +18,14 @@ class SignalEvent(Event):
 	This is received by a Portfolio object and acted upon. """
 
 	def __init__(self, strategy_id, symbol, datetime, signal_type, strength): 
-	""" Initialises the SignalEvent. 
-	Parameters: strategy_id - The unique identifier for the strategy that generated the signal. 
-	symbol - The ticker symbol, e.g. ’GOOG’. datetime - 
-	The timestamp at which the signal was generated. signal_type - 
-	’LONG’ or ’SHORT’. strength - An adjustment factor "suggestion" used to scale quantity at the portfolio level. 
-	Useful for pairs strategies. """
+		""" Initialises the SignalEvent. 
+		Parameters: strategy_id - The unique identifier for the strategy that generated the signal. 
+		symbol - The ticker symbol, e.g. ’GOOG’. datetime - 
+		The timestamp at which the signal was generated. signal_type - 
+		’LONG’ or ’SHORT’. strength - An adjustment factor "suggestion" used to scale quantity at the portfolio level. 
+		Useful for pairs strategies. """
 	
-		self.type = ’'SIGNAL' 
+		self.type = 'SIGNAL' 
 		self.strategy_id = strategy_id 
 		self.symbol = symbol 
 		self.datetime = datetime 
@@ -57,11 +57,11 @@ class FillEvent(Event):
 
 	def __init__(self, timeindex, symbol, exchange, quantity, direction, fill_cost, commission=None):
 
-	""" Initialises the FillEvent object. Sets the symbol, exchange, quantity, direction, cost of fill and an optional commission.
-	If commission is not provided, the Fill object will calculate it based on the trade size and Interactive Brokers fees.
-	Parameters: timeindex - The bar-resolution when the order was filled. symbol - The instrument which was filled. exchange - 
-	The exchange where the order was filled. quantity - The filled quantity. direction - The direction of fill (’BUY’ or ’SELL’) fill_cost - 
-	The holdings value in dollars. commission - An optional commission sent from IB. """
+		""" Initialises the FillEvent object. Sets the symbol, exchange, quantity, direction, cost of fill and an optional commission.
+		If commission is not provided, the Fill object will calculate it based on the trade size and Interactive Brokers fees.
+		Parameters: timeindex - The bar-resolution when the order was filled. symbol - The instrument which was filled. exchange - 
+		The exchange where the order was filled. quantity - The filled quantity. direction - The direction of fill (’BUY’ or ’SELL’) fill_cost - 
+		The holdings value in dollars. commission - An optional commission sent from IB. """
 
 		self.type = 'FILL' 
 		self.timeindex = timeindex 
@@ -78,7 +78,7 @@ class FillEvent(Event):
 			self.commission = commission
 
 	def calculate_ib_commission(self): 
-	""" Calculates the fees of trading based on an Interactive Brokers fee structure for API, in USD.
+		""" Calculates the fees of trading based on an Interactive Brokers fee structure for API, in USD.
 		This does not include exchange or ECN fees.
 		Based on "US API Directed Orders": https://www.interactivebrokers.com/en/index.php? f=commission&p=stocks2 """ 
 		full_cost = 1.3 
@@ -86,7 +86,7 @@ class FillEvent(Event):
 			full_cost = max(1.3, 0.013 * self.quantity) 
 		else: 
 		# Greater than 500 
-		full_cost = max(1.3, 0.008 * self.quantity) 
+			full_cost = max(1.3, 0.008 * self.quantity) 
 		return full_cost
 
 

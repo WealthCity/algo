@@ -6,8 +6,10 @@ from cointegration.cointegration import cointegrate
 import forecast.forecast as f
 import performance_management.performance_management as pm 
 import risk_management.risk_management as rm
+import trading_engine.data_reader
 data1 = rd.get_data_from_ticker('CBA')
 data2= rd.get_data_from_ticker('WBC')
+
 
 #test = Test_Stationarity(data,'close_price')
 #print(str(test.series))
