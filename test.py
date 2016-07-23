@@ -6,9 +6,18 @@ from cointegration.cointegration import cointegrate
 import forecast.forecast as f
 import performance_management.performance_management as pm 
 import risk_management.risk_management as rm
-import trading_engine.data_reader
-data1 = rd.get_data_from_ticker('CBA')
-data2= rd.get_data_from_ticker('WBC')
+from trading_engine.data_reader import DatabaseDataHandler
+from trading_engine.event import MarketEvent
+
+#data1 = rd.get_data_from_ticker('CBA')
+#data2= rd.get_data_from_ticker('WBC')
+
+market_event = MarketEvent()
+db_handler = DatabaseDataHandler(market_event,['CBA','WBC'])
+db_handler.update_bars()
+#print(next(db_handler.symbol_data['CBA']))
+#print(db_handler._get_new_bar('CBA'))
+#print(db_handler.get_latest_bar('CBA'))
 
 
 #test = Test_Stationarity(data,'close_price')
@@ -25,7 +34,7 @@ data2= rd.get_data_from_ticker('WBC')
 #print(pm.equity_sharpe(data1,'close_price'))
 #print(pm.market_neutral_sharpe(data1,'close_price',data2,'close_price'))
 
-print(rm.var_cov_var(70000,data1,'close_price'))
+#print(rm.var_cov_var(70000,data1,'close_price'))
 #print(lagged_time_series)
 
 #f.forecast(lagged_time_series,['Today','Lag_1%','Lag_2%'],'Direction',0.7,0.3)

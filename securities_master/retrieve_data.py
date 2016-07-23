@@ -1,4 +1,4 @@
-from securities_master import Exchange, Data_Vendor, Symbol, Daily_Price
+from securities_master.securities_master import Exchange, Data_Vendor, Symbol, Daily_Price
 import pandas as pd
 from datetime import datetime
 
@@ -10,9 +10,9 @@ def get_data_from_ticker(ticker, start_date=None, end_date=None):
 	
 	if ticker in existing_symbol_list:
 		symbol_record = Symbol.get(ticker=ticker)	
-		print(symbol_record.ticker)
+		#print(symbol_record.ticker)
 		symbol_id = symbol_record.id
-		print(symbol_id)			
+		print('Obtaining data for {}:'.format(ticker))			
 		existing_price_data=None	
 
 				
@@ -22,7 +22,7 @@ def get_data_from_ticker(ticker, start_date=None, end_date=None):
 			
 		if start_date is None and end_date is None:
 			existing_price_data = Daily_Price.select().where(Daily_Price.symbol==symbol_id).dicts()	
-			print(existing_price_data)		
+			#print(existing_price_data)		
 	# if start date is none, select the earliest entry
 		
 		if start_date is not None and end_date is None:	
@@ -38,7 +38,7 @@ def get_data_from_ticker(ticker, start_date=None, end_date=None):
 		del existing_price_data
 		existing_price_data_frame=existing_price_data_frame.set_index('price_date')
 		print(existing_price_data_frame.head())
-		print(existing_price_data_frame.tail())
+		#print(existing_price_data_frame.tail())
 		return(existing_price_data_frame)
 	else:
 		print('Symbol was not found in database')	
